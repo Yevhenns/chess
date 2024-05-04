@@ -119,23 +119,12 @@ export const Game = () => {
         borderType: BORDER_TYPE.frame,
       },
       extensions: [
-        { class: Markers, props: { autoMarkers: MARKER_TYPE.square } },
+        { class: Markers, props: { autoMarkers: MARKER_TYPE.dot } },
         { class: PromotionDialog },
         { class: Accessibility, props: { visuallyHidden: true } },
       ],
     });
     board.enableMoveInput(inputHandler, COLOR.white);
-
-    function inputHandler(event) {
-      console.log(event);
-      if (
-        event.type === INPUT_EVENT_TYPE.moveInputStarted ||
-        event.type === INPUT_EVENT_TYPE.validateMoveInput
-      ) {
-        return true;
-      }
-    }
-    console.log(board);
   }, []);
 
   return (
