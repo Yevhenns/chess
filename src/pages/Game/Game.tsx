@@ -128,9 +128,8 @@ export const Game = () => {
   }, []);
 
   return (
-    <div>
-      <p>Game</p>
+    <>
       <div id="board" />
-    </div>
+    </>
   );
 };
