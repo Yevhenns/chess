@@ -1,21 +1,21 @@
 import { useEffect } from 'react';
+import { Chess } from 'chess.js';
 import {
   Chessboard,
+  COLOR,
   FEN,
   INPUT_EVENT_TYPE,
   BORDER_TYPE,
-  COLOR,
-} from '../../../node_modules/cm-chessboard/src/Chessboard.js';
-import {
-  PROMOTION_DIALOG_RESULT_TYPE,
-  PromotionDialog,
-} from '../../../node_modules/cm-chessboard/src/extensions/promotion-dialog/PromotionDialog.js';
+} from 'cm-chessboard/src/Chessboard.js';
+import { Accessibility } from 'cm-chessboard/src/extensions/accessibility/Accessibility.js';
 import {
   MARKER_TYPE,
   Markers,
-} from '../../../node_modules/cm-chessboard/src/extensions/markers/Markers.js';
-import { Accessibility } from '../../../node_modules/cm-chessboard/src/extensions/accessibility/Accessibility.js';
-import { Chess } from 'chess.js';
+} from 'cm-chessboard/src/extensions/markers/Markers.js';
+import {
+  PROMOTION_DIALOG_RESULT_TYPE,
+  PromotionDialog,
+} from 'cm-chessboard/src/extensions/promotion-dialog/PromotionDialog.js';
 
 export const Game = () => {
   useEffect(() => {
@@ -26,13 +26,12 @@ export const Game = () => {
       const x = Math.sin(seed++) * 10000;
       return x - Math.floor(x);
     }
-    function makeEngineMove(chessboard) {
+    function makeEngineMove(chessboard: Chessboard) {
       const possibleMoves = chess.moves({ verbose: true });
       if (possibleMoves.length > 0) {
         const randomIndex = Math.floor(random() * possibleMoves.length);
         const randomMove = possibleMoves[randomIndex];
         setTimeout(() => {
-          // smoother with 500ms delay
           chess.move({ from: randomMove.from, to: randomMove.to });
           chessboard.setPosition(chess.fen(), true);
           chessboard.enableMoveInput(inputHandler, COLOR.white);
@@ -70,7 +69,7 @@ export const Game = () => {
           });
         } else {
           // promotion?
-          let possibleMoves = chess.moves({
+          const possibleMoves = chess.moves({
             square: event.squareFrom,
             verbose: true,
           });
@@ -125,6 +124,7 @@ export const Game = () => {
       ],
     });
     board.enableMoveInput(inputHandler, COLOR.white);
+    console.log(Chessboard);
   }, []);
 
   return (
