@@ -126,7 +126,7 @@ export const Game = () => {
     }
 
     const board = new Chessboard(document.getElementById('board'), {
-      assetsUrl: '/node_modules/cm-chessboard/assets/',
+      assetsUrl: '/assets/',
       position: FEN.start,
       style: {
         pieces: {
