@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Chess } from 'chess.js';
 import {
   Chessboard,
@@ -18,6 +18,8 @@ import {
 } from 'cm-chessboard/src/extensions/promotion-dialog/PromotionDialog.js';
 
 export const Game = () => {
+  const [isThinking, setIsThinking] = useState(false);
+
   useEffect(() => {
     const chess = new Chess();
 
@@ -26,20 +28,27 @@ export const Game = () => {
       const x = Math.sin(seed++) * 10000;
       return x - Math.floor(x);
     }
+
     function makeEngineMove(chessboard: Chessboard) {
+      const thinkingTime = () => {
+        return Math.floor(Math.random() * 5000) + 250;
+      };
+
       const possibleMoves = chess.moves({ verbose: true });
       if (possibleMoves.length > 0) {
         const randomIndex = Math.floor(random() * possibleMoves.length);
         const randomMove = possibleMoves[randomIndex];
+        setIsThinking(true);
         setTimeout(() => {
           chess.move({ from: randomMove.from, to: randomMove.to });
           chessboard.setPosition(chess.fen(), true);
           chessboard.enableMoveInput(inputHandler, COLOR.white);
-        }, 500);
+          setIsThinking(false);
+        }, thinkingTime());
       }
     }
 
-    function inputHandler(event) {
+    function inputHandler(event: InputHandlerEvent) {
       console.log('inputHandler', event);
       if (event.type === INPUT_EVENT_TYPE.movingOverSquare) {
         return; // ignore this event
@@ -59,6 +68,7 @@ export const Game = () => {
           promotion: event.promotion,
         };
         const result = chess.move(move);
+
         if (result) {
           event.chessboard.state.moveInputProcess.then(() => {
             // wait for the move input process has finished
@@ -78,7 +88,7 @@ export const Game = () => {
               event.chessboard.showPromotionDialog(
                 event.squareTo,
                 COLOR.white,
-                result => {
+                (result: Result) => {
                   console.log('promotion result', result);
                   if (
                     result.type === PROMOTION_DIALOG_RESULT_TYPE.pieceSelected
@@ -107,6 +117,7 @@ export const Game = () => {
           event.chessboard.disableMoveInput();
         }
       }
+      console.log(event.legalMove);
     }
 
     const board = new Chessboard(document.getElementById('board'), {
@@ -124,12 +135,14 @@ export const Game = () => {
       ],
     });
     board.enableMoveInput(inputHandler, COLOR.white);
-    console.log(Chessboard);
   }, []);
 
   return (
     <>
+      <img src="/terminator.png" width={100} height={100} />
+      {isThinking ? <p>Thinking...</p> : <p>Your turn</p>}
       <div id="board" />
+      <span>You</span>
     </>
   );
 };

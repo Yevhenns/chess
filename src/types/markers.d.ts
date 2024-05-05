@@ -25,6 +25,19 @@ declare module 'cm-chessboard/src/extensions/markers/Markers.js' {
       class: string;
       slice: string;
     };
+    square: {
+      class: string;
+      slice: string;
+    };
+    dot: {
+      class: string;
+      slice: string;
+      position: string;
+    };
+    bevel: {
+      class: string;
+      slice: string;
+    };
   }
   export const MARKER_TYPE: MarkerTypeObject;
 }
