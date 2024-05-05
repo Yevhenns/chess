@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { Chess } from 'chess.js';
 import {
   Chessboard,
@@ -16,6 +17,8 @@ import {
   PROMOTION_DIALOG_RESULT_TYPE,
   PromotionDialog,
 } from 'cm-chessboard/src/extensions/promotion-dialog/PromotionDialog.js';
+import { Clock } from '../../components/Clock';
+import css from './Game.module.css';
 
 export const Game = () => {
   const [isThinking, setIsThinking] = useState(false);
@@ -117,7 +120,6 @@ export const Game = () => {
           event.chessboard.disableMoveInput();
         }
       }
-      console.log(event.legalMove);
     }
 
     const board = new Chessboard(document.getElementById('board'), {
@@ -138,11 +140,14 @@ export const Game = () => {
   }, []);
 
   return (
-    <>
+    <div className={css.layout}>
+      <NavLink to="/">Back</NavLink>
       <img src="/terminator.png" width={100} height={100} />
+      <Clock count={isThinking} />
       {isThinking ? <p>Thinking...</p> : <p>Your turn</p>}
       <div id="board" />
       <span>You</span>
-    </>
+      <Clock count={!isThinking} />
+    </div>
   );
 };
