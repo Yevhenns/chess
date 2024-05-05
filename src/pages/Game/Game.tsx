@@ -18,10 +18,12 @@ import {
   PromotionDialog,
 } from 'cm-chessboard/src/extensions/promotion-dialog/PromotionDialog.js';
 import { Clock } from '../../components/Clock';
+import { Result } from '../../components/Result';
 import css from './Game.module.css';
 
 export const Game = () => {
   const [isThinking, setIsThinking] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false);
 
   useEffect(() => {
     const chess = new Chess();
@@ -33,6 +35,7 @@ export const Game = () => {
     }
 
     function makeEngineMove(chessboard: Chessboard) {
+      setIsGameOver(chess.isGameOver());
       const thinkingTime = () => {
         return Math.floor(Math.random() * 5000) + 250;
       };
@@ -143,11 +146,12 @@ export const Game = () => {
     <div className={css.layout}>
       <NavLink to="/">Back</NavLink>
       <img src="/terminator.png" width={100} height={100} />
-      <Clock count={isThinking} />
+      <Clock count={isThinking} isGameOver={isGameOver} />
       {isThinking ? <p>Thinking...</p> : <p>Your turn</p>}
       <div id="board" />
       <span>You</span>
-      <Clock count={!isThinking} />
+      <Clock count={!isThinking} isGameOver={isGameOver} />
+      {isGameOver && <Result />}
     </div>
   );
 };

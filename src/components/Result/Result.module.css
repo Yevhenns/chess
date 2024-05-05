@@ -1,0 +1,28 @@
+.modalWrapper {
+  position: fixed;
+  box-sizing: border-box;
+  z-index: 9;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(30, 30, 29, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 50px 0;
+  overflow: scroll;
+
+  .modal {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 300px;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+}
