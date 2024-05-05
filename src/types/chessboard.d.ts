@@ -52,7 +52,7 @@ declare module 'cm-chessboard/src/Chessboard.js' {
         assetsUrl: string;
         position: string;
         style: {
-          pieces: { file: string };
+          pieces?: { file: string };
           cssClass: string;
           borderType: string;
         };
