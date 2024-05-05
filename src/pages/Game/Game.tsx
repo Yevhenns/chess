@@ -126,12 +126,12 @@ export const Game = () => {
     }
 
     const board = new Chessboard(document.getElementById('board'), {
-      assetsUrl: '../../../node_modules/cm-chessboard/assets/',
+      assetsUrl: '/node_modules/cm-chessboard/assets/',
       position: FEN.start,
       style: {
-        // pieces: {
-        // file: '../../../node_modules/cm-chessboard/assets/pieces/staunty.svg',
-        // },
+        pieces: {
+          file: 'pieces/staunty.svg',
+        },
         cssClass: 'green',
         borderType: BORDER_TYPE.frame,
       },
