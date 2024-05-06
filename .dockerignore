@@ -3,3 +3,4 @@ Dockerfile
 .gitignore
 README.md
 .git
+vercel.json
