@@ -1,15 +1,6 @@
-FROM node:20-alpine AS dependencies
+FROM node:20.11.0-alpine
 WORKDIR /app
-COPY package*.json ./
-COPY package-lock*.json ./
+COPY ./package.json .
 RUN npm install
 COPY . .
-RUN npm run build
-
-FROM node:20-alpine AS runner
-WORKDIR /app
-COPY ./src ./src
-COPY --from=dependencies /app/node_modules ./node_modules
-COPY --from=dependencies /app/package*.json ./
-EXPOSE 3000
 CMD ["npm", "run", "dev"]
